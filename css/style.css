@@ -344,7 +344,32 @@ button { background: none; border: none; cursor: pointer; font-family: inherit; 
   inset: 0;
   background: var(--black);
   z-index: 0;
+  overflow: hidden;
 }
+.hero__bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0.28;
+  transform: scale(1.05);
+  transition: transform 8s ease;
+}
+.hero.loaded .hero__bg-img { transform: scale(1); }
+.hero__bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(8,8,8,0.45) 0%,
+    rgba(8,8,8,0.60) 50%,
+    rgba(8,8,8,0.90) 100%
+  );
+  z-index: 1;
+}
+.hero__bg .hero__orb { z-index: 2; }
 .hero__orb {
   position: absolute;
   border-radius: 50%;
@@ -523,73 +548,41 @@ button { background: none; border: none; cursor: pointer; font-family: inherit; 
   letter-spacing: 0.06em;
 }
 
-/* Concept Visual Card */
+/* Concept Visual Photos */
 .concept__visual { display: flex; justify-content: center; }
-.concept__card {
+.concept__photos {
   position: relative;
-  width: 280px;
+  width: 320px;
+}
+.concept__photo-main {
+  width: 100%;
   aspect-ratio: 3/4;
   border-radius: 20px;
-  border: 1px solid rgba(232,82,122,0.25);
-  background: var(--dark-mid);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 1px solid rgba(232,82,122,0.2);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px var(--border);
 }
-.concept__card-glow {
+.concept__photo-main img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s var(--ease);
+}
+.concept__photos:hover .concept__photo-main img { transform: scale(1.04); }
+.concept__photo-logo {
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 30%, rgba(232,82,122,0.15), transparent 70%);
-  pointer-events: none;
+  bottom: -20px;
+  right: -20px;
+  width: 130px;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid var(--pink);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px var(--pink-glow);
 }
-.concept__card-inner {
-  position: relative;
-  text-align: center;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-}
-.concept__card-icon {
-  font-size: 2.5rem;
-  color: var(--pink);
-  margin-bottom: 0.5rem;
-  filter: drop-shadow(0 0 12px var(--pink-glow));
-}
-.concept__card-name {
-  font-family: var(--font-en);
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: 0.06em;
-}
-.concept__card-en {
-  font-family: var(--font-en);
-  font-size: 0.75rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-.concept__card-divider {
-  width: 40px; height: 1px;
-  background: var(--pink);
-  margin: 0.5rem 0;
-  opacity: 0.5;
-}
-.concept__card-addr {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-.concept__card-addr i { color: var(--pink); font-size: 0.75rem; }
-.concept__card-open {
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  letter-spacing: 0.1em;
+.concept__photo-logo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
 }
 
 
@@ -681,35 +674,30 @@ button { background: none; border: none; cursor: pointer; font-family: inherit; 
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--border);
+  position: relative;
 }
-.gallery__placeholder {
+.gallery__item img {
   width: 100%; height: 100%;
-  background: var(--dark-mid);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  transition: background var(--trans), transform var(--trans);
-  cursor: default;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.5s var(--ease);
 }
-.gallery__item:hover .gallery__placeholder {
-  background: var(--dark-soft);
-  transform: scale(1.02);
-}
-.gallery__placeholder i {
-  font-size: 2rem;
-  color: var(--pink);
-  opacity: 0.6;
-  filter: drop-shadow(0 0 8px var(--pink-glow));
-}
-.gallery__placeholder span {
+.gallery__item:hover img { transform: scale(1.06); }
+.gallery__label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 100%);
+  color: var(--text-muted);
   font-family: var(--font-en);
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  padding: 1.2rem 0.8rem 0.6rem;
+  opacity: 0;
+  transition: opacity var(--trans);
 }
+.gallery__item:hover .gallery__label { opacity: 1; }
 .gallery__item--cta {
   border-color: rgba(232,82,122,0.25);
 }
@@ -1079,8 +1067,9 @@ button { background: none; border: none; cursor: pointer; font-family: inherit; 
   .hero__cta .btn { width: 100%; max-width: 280px; justify-content: center; }
 
   /* Concept */
-  .concept__inner { grid-template-columns: 1fr; gap: 2.5rem; }
-  .concept__card { width: 220px; }
+  .concept__inner { grid-template-columns: 1fr; gap: 3rem; }
+  .concept__photos { width: 260px; margin: 0 auto; }
+  .concept__photo-logo { width: 100px; right: -10px; bottom: -16px; }
 
   /* Features */
   .features__grid { grid-template-columns: 1fr; gap: 1rem; }
