@@ -126,23 +126,21 @@ function initTodayInfo() {
   const min  = now.getMinutes();
   const time = hour * 60 + min; // 分換算
 
-  /* 営業スケジュール定義 */
-  const schedule = {
-    0: { lunch: [12*60, 17*60], night: [20*60, 3*60+24*60] }, // 日
-    1: { lunch: null,           night: [20*60, 3*60+24*60] }, // 月
-    2: { lunch: [12*60, 17*60], night: [20*60, 3*60+24*60] }, // 火
-    3: { lunch: [12*60, 17*60], night: [20*60, 3*60+24*60] }, // 水
-    4: { lunch: [12*60, 17*60], night: [20*60, 3*60+24*60] }, // 木
-    5: { lunch: [12*60, 17*60], night: [20*60, 3*60+24*60] }, // 金
-    6: { lunch: [12*60, 17*60], night: [20*60, 3*60+24*60] }, // 土
+  const lunchSchedule = {
+    0: [12*60, 17*60],
+    1: null,
+    2: [12*60, 17*60],
+    3: [12*60, 17*60],
+    4: [12*60, 17*60],
+    5: [12*60, 17*60],
+    6: [12*60, 17*60],
   };
 
-  const today   = schedule[dow];
+  const todayLunch = lunchSchedule[dow];
   const inRange = (start, end) => time >= start && time < end;
 
-  // 深夜帯（0〜3時）は前日の「夜の部」扱い
-  const isLunchOpen  = today.lunch  && inRange(today.lunch[0], today.lunch[1]);
-  const isNightOpen  = time >= 20*60 || time < 3*60; // 20:00〜翌3:00
+  const isLunchOpen  = todayLunch && inRange(todayLunch[0], todayLunch[1]);
+  const isNightOpen  = time >= 20*60 || time < 3*60;
 
   let html = '';
   if (isLunchOpen) {

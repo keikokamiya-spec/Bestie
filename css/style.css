@@ -27,8 +27,6 @@
 
   /* Gradients */
   --grad-pink:    linear-gradient(135deg, var(--pink-deep), var(--pink), var(--pink-light));
-  --grad-hero:    linear-gradient(180deg, rgba(8,8,8,0.15) 0%, rgba(8,8,8,0.88) 100%);
-
   /* Spacing & Layout */
   --section-py:      clamp(72px, 10vw, 120px);
   --container-max:   1200px;
@@ -357,7 +355,6 @@ button { background: none; border: none; cursor: pointer; font-family: inherit; 
   transform: scale(1.05);
   transition: transform 8s ease;
 }
-.hero.loaded .hero__bg-img { transform: scale(1); }
 .hero__bg-overlay {
   position: absolute;
   inset: 0;
